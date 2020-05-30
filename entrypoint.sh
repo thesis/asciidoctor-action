@@ -52,6 +52,7 @@ else
   commands=$(cat entrypoint-test-output)
   if [[ $commands = "${TEST}" ]]; then
     echo "Commands equal test expectations."
+    echo "${TEST}"
     exit 0
   else                                                                             
     printf "Ran unexpected commands:\n" >&2
