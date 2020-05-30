@@ -1,8 +1,8 @@
 FROM ruby:alpine
 
-RUN gem install asciidoctor asciidoctor-diagram
+RUN gem install asciidoctor asciidoctor-pdf asciidoctor-diagram
 
-RUN apk add bash nodejs npm
+RUN apk add nodejs npm bash
 
 RUN mkdir /mermaid
 
@@ -16,10 +16,8 @@ COPY mermaid-package-lock.json package-lock.json
 # some dependencies.
 RUN npm install --silent @mermaid-js/mermaid-cli
 
-RUN chmod -R o+rwx /mermaid/node_modules
+ENV PATH /mermaid/node_modules/.bin:/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN /bin/bash -c 'echo "export PATH=/mermaid/node_modules/.bin:\$PATH" > /etc/profile.d/mermaid.sh'
+COPY entrypoint.sh /entrypoint.sh
 
-USER nobody
-
-ENTRYPOINT ["/bin/bash", "--login"]
+ENTRYPOINT "/entrypoint.sh"
