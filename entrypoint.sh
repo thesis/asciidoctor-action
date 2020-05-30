@@ -46,7 +46,7 @@ else
   printf "" > entrypoint-test-output
   for file in $(ls $INPUT_FILES); do
     set +x
-    echo "$ASCIIDOCTOR -r asciidoctor-diagram $ASCIIDOCTOR_ARGS $file" >> entrypoint-test-output
+    echo "$ASCIIDOCTOR -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json $ASCIIDOCTOR_ARGS $file" >> entrypoint-test-output
   done
 
   commands=$(cat entrypoint-test-output)
