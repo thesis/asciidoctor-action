@@ -36,24 +36,29 @@ if [[ -z $INPUT_FILES ]]; then
   exit $EX_USAGE
 fi
 
-COMMAND=$(echo "$ASCIIDOCTOR -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
+COMMAND=$(echo "$ASCIIDOCTOR -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
+OUTPUT=
 
 # TEST env variable indicates we should be in testing mode (below).
-if [[ -z $TEST ]]; then
-  $COMMAND
+mkdir /tmp/asciidoc-out
+eval $COMMAND
+
+OUTPUT=$(echo "::set-output name=compiled-asciidoc::$(echo /tmp/asciidoc-out/**/*)")
+
+if [[ -z $TEST_COMMAND && -z $TEST_OUTPUT ]]; then
+  echo $OUTPUT
+elif [[ "${COMMAND}" != "${TEST_COMMAND}" ]]; then
+  printf "Ran unexpected command:\n" >&2
+  diff <(echo "${COMMAND}") <(echo "${TEST_COMMAND}") >&2
+  exit 1
+elif [[ "${OUTPUT}" != "${TEST_OUTPUT}" ]]; then
+  printf "Printed unexpected output:\n" >&2
+  diff <(echo "${OUTPUT}") <(echo "${TEST_OUTPUT}") >&2
+  exit 1
 else
-  echo $COMMAND > entrypoint-test-output
-
-  cat entrypoint-test-output
-  commands=$(cat entrypoint-test-output)
-  if [[ $commands = "${TEST}" ]]; then
-    echo "Commands equal test expectations."
-    echo "${TEST}"
-    exit 0
-  else                                                                             
-    printf "Ran unexpected commands:\n" >&2
-    diff entrypoint-test-output <(echo "${TEST}") >&2
-    exit 1
-  fi
-
+  echo "Command equals test expectations:"
+  echo "${TEST_COMMAND}"
+  echo "And output equals test expectations:"
+  echo "${TEST_OUTPUT}"
+  exit 0
 fi
