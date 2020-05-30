@@ -46,11 +46,13 @@ mkdir $GITHUB_WORKSPACE/asciidoc-out
 eval $COMMAND
 
 FILES=$(echo $GITHUB_WORKSPACE/asciidoc-out/**/*)
-OUTPUT="::set-output name=asciidoctor-artifacts::'$FILES'"
+OUTPUT="::set-output name=asciidoctor-artifacts::asciidoc-out"
 echo "Generated files $FILES"
 
 if [[ -z $TEST_COMMAND && -z $TEST_OUTPUT ]]; then
-  echo $OUTPUT
+  echo "Output:"
+  echo "${OUTPUT}"
+  echo "Output ${OUTPUT}"
 elif [[ "${COMMAND}" != "${TEST_COMMAND}" ]]; then
   printf "Ran unexpected command:\n" >&2
   diff <(echo "${COMMAND}") <(echo "${TEST_COMMAND}") >&2

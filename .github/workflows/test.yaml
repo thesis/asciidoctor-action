@@ -18,9 +18,10 @@ jobs:
         files: 'test/*.adoc test/**/*.adoc'
       env:
         TEST_COMMAND: |-
-          asciidoctor -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
-          ::set-output name=asciidoctor-artifacts::/tmp/asciidoc-out/test /tmp/asciidoc-out/test/index.html /tmp/asciidoc-out/test/subdir /tmp/asciidoc-out/test/subdir/subdir.html /tmp/asciidoc-out/test/subdir/subsubdir /tmp/asciidoc-out/test/subdir/subsubdir/index.html /tmp/asciidoc-out/test/subdir/subsubdir/subsubdir.html /tmp/asciidoc-out/test/subdir/subsubdir/vamoose.html /tmp/asciidoc-out/test/subdir2 /tmp/asciidoc-out/test/subdir2/subdir2.html
+          ::set-output name=asciidoctor-artifacts::asciidoc-out
+    - run: rm -r asciidoc-out
     - name: Test Asciidoctor run with args
       uses: ./
       with:
@@ -29,9 +30,10 @@ jobs:
       env:
         DATE: '+%Y-%m-%d'
         TEST_COMMAND: |-
-          asciidoctor -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
-          ::set-output name=asciidoctor-artifacts::/tmp/asciidoc-out/test /tmp/asciidoc-out/test/index.html /tmp/asciidoc-out/test/subdir /tmp/asciidoc-out/test/subdir/subdir.html /tmp/asciidoc-out/test/subdir/subsubdir /tmp/asciidoc-out/test/subdir/subsubdir/index.html /tmp/asciidoc-out/test/subdir/subsubdir/subsubdir.html /tmp/asciidoc-out/test/subdir/subsubdir/vamoose.html /tmp/asciidoc-out/test/subdir2 /tmp/asciidoc-out/test/subdir2/subdir2.html
+          ::set-output name=asciidoctor-artifacts::asciidoc-out
+    - run: rm -r asciidoc-out
     - name: Test Asciidoctor PDF run
       uses: ./
       with:
@@ -39,17 +41,18 @@ jobs:
         format: 'pdf'
       env:
         TEST_COMMAND: |-
-          asciidoctor-pdf -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
-          ::set-output name=asciidoctor-artifacts::/tmp/asciidoc-out/test /tmp/asciidoc-out/test/index.pdf /tmp/asciidoc-out/test/subdir /tmp/asciidoc-out/test/subdir/subdir.pdf /tmp/asciidoc-out/test/subdir/subsubdir /tmp/asciidoc-out/test/subdir/subsubdir/index.pdf /tmp/asciidoc-out/test/subdir/subsubdir/subsubdir.pdf /tmp/asciidoc-out/test/subdir/subsubdir/vamoose.pdf /tmp/asciidoc-out/test/subdir2 /tmp/asciidoc-out/test/subdir2/subdir2.pdf
+          ::set-output name=asciidoctor-artifacts::asciidoc-out
+    - run: rm -r asciidoc-out
     - name: Test Asciidoctor PDF run with args
       uses: ./
       with:
         files: 'test/*.adoc test/**/*.adoc'
         format: pdf
-        asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
+        asciidoctor-args: '-a revdate=`date +%Y-%m-%d) --failure-level=ERROR'
       env:
         TEST_COMMAND: |-
-          asciidoctor-pdf -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
-          ::set-output name=asciidoctor-artifacts::/tmp/asciidoc-out/test /tmp/asciidoc-out/test/index.pdf /tmp/asciidoc-out/test/subdir /tmp/asciidoc-out/test/subdir/subdir.pdf /tmp/asciidoc-out/test/subdir/subsubdir /tmp/asciidoc-out/test/subdir/subsubdir/index.pdf /tmp/asciidoc-out/test/subdir/subsubdir/subsubdir.pdf /tmp/asciidoc-out/test/subdir/subsubdir/vamoose.pdf /tmp/asciidoc-out/test/subdir2 /tmp/asciidoc-out/test/subdir2/subdir2.pdf
+          ::set-output name=asciidoctor-artifacts::asciidoc-out

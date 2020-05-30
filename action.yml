@@ -19,7 +19,7 @@ inputs:
     required: false
     default: ''
 outputs:
-  compiled-asciidoc:
+  asciidoctor-artifacts:
     description: The list of space-separated compilation outputs
 runs:
   using: docker
