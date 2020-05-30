@@ -9,7 +9,7 @@ EX_USAGE=64 # Usage error exit code from /usr/include/sysexits.h
 OUTPUT_FORMAT=
 ASCIIDOCTOR_ARGS=
 
-while getopts "f:a:" arg; do
+while getopts ":f:a:" arg; do
   case "${arg}" in
     f)
       OUTPUT_FORMAT=${OPTARG}
@@ -17,13 +17,8 @@ while getopts "f:a:" arg; do
     a)
       ASCIIDOCTOR_ARGS=${OPTARG}
       ;;
-    :)
-      printf "Expected -${OPTARG} to have a value\n" >&2
-      exit $EX_USAGE
-      ;;
     *)
-      printf "Unexpected arg ${OPTARG}\n" >&2
-      exit $EX_USAGE
+      break
       ;;
   esac
 done
