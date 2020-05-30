@@ -20,4 +20,4 @@ ENV PATH /mermaid/node_modules/.bin:/usr/local/bundle/bin:/usr/local/sbin:/usr/l
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT "/entrypoint.sh"
+ENTRYPOINT ["/entrypoint.sh"]
