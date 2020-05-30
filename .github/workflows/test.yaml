@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  run:
+  test-html:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,11 @@ jobs:
           asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
-    - run: rm -r asciidoc-out
+  test-html-args:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
     - name: Test Asciidoctor run with args
       uses: ./
       with:
@@ -33,7 +37,11 @@ jobs:
           asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
-    - run: rm -r asciidoc-out
+  test-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
     - name: Test Asciidoctor PDF run
       uses: ./
       with:
@@ -44,13 +52,17 @@ jobs:
           asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
-    - run: rm -r asciidoc-out
+  test-pdf-args:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
     - name: Test Asciidoctor PDF run with args
       uses: ./
       with:
         files: 'test/*.adoc test/**/*.adoc'
         format: pdf
-        asciidoctor-args: '-a revdate=`date +%Y-%m-%d) --failure-level=ERROR'
+        asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
       env:
         TEST_COMMAND: |-
           asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
