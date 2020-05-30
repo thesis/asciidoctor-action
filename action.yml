@@ -13,8 +13,8 @@ inputs:
   format:
     description: The format to compile to, `pdf` or blank.
     required: false
-    default: 'pdf'
-  args:
+    default: ''
+  asciidoctor-args:
     description: Additional arguments to pass the asciidoctor command.
     required: false
     default: ''
@@ -22,9 +22,8 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - -a
-    - ${{ inputs.args }}
     - -f
     - ${{ inputs.format }}
-    - --
+    - -a
+    - ${{ inputs.asciidoctor-args }}
     - ${{ inputs.files }}
