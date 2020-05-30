@@ -8,20 +8,23 @@ branding:
   color: white
 inputs:
   files:
-    description: Files to compile
+    description: Files to compile, can include * and ** globs.
     required: true
   format:
     description: The format to compile to, `pdf` or blank.
     required: false
-    default: ''
+    default: 'pdf'
   args:
-    description: Additional arguments to pass the asciidoctor command
+    description: Additional arguments to pass the asciidoctor command.
     required: false
     default: ''
 runs:
   using: docker
   image: Dockerfile
   args:
-    - ${{ format }}
-    - ${{ args }}
-    - ${{ files }}
+    - -a
+    - ${{ inputs.args }}
+    - -f
+    - ${{ inputs.format }}
+    - --
+    - ${{ inputs.files }}
