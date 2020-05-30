@@ -15,8 +15,15 @@ jobs:
     - name: Test Asciidoctor run
       uses: ./
       with:
-        files: '*.adoc **/*.adoc'
+        files: 'test/*.adoc test/**/*.adoc'
         #args: 
         #format: 'pdf'
       env:
-        TEST: 'sk: test-service-key p: test-project bn: test-bucket-name bp: . bf: . sw: false hpp: index.html epp: 404.html'
+        TEST: |-
+          asciidoctor -r asciidoctor-diagram  test/index.adoc
+          asciidoctor -r asciidoctor-diagram  test/index.adoc
+          asciidoctor -r asciidoctor-diagram  test/subdir/subdir.adoc
+          asciidoctor -r asciidoctor-diagram  test/subdir/subsubdir/index.adoc
+          asciidoctor -r asciidoctor-diagram  test/subdir/subsubdir/subsubdir.adoc
+          asciidoctor -r asciidoctor-diagram  test/subdir/subsubdir/vamoose.adoc
+          asciidoctor -r asciidoctor-diagram  test/subdir2/subdir2.adoc
