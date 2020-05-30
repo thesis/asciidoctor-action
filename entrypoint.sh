@@ -36,19 +36,15 @@ if [[ -z $INPUT_FILES ]]; then
   exit $EX_USAGE
 fi
 
+COMMAND=$(echo "$ASCIIDOCTOR -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
+
 # TEST env variable indicates we should be in testing mode (below).
 if [[ -z $TEST ]]; then
-  for file in $(ls $INPUT_FILES); do
-    set +x
-    $ASCIIDOCTOR -r asciidoctor-diagram $ASCIIDOCTOR_ARGS $INPUT_FILES
-  done
+  $COMMAND
 else
-  printf "" > entrypoint-test-output
-  for file in $(ls $INPUT_FILES); do
-    set +x
-    echo "$ASCIIDOCTOR -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json $ASCIIDOCTOR_ARGS $file" >> entrypoint-test-output
-  done
+  echo $COMMAND > entrypoint-test-output
 
+  cat entrypoint-test-output
   commands=$(cat entrypoint-test-output)
   if [[ $commands = "${TEST}" ]]; then
     echo "Commands equal test expectations."

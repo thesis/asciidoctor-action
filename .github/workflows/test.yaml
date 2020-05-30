@@ -18,13 +18,7 @@ jobs:
         files: 'test/*.adoc test/**/*.adoc'
       env:
         TEST: |-
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/index.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/index.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subdir.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subsubdir/index.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subsubdir/subsubdir.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subsubdir/vamoose.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir2/subdir2.adoc
+          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
     - name: Test Asciidoctor run with args
       uses: ./
       with:
@@ -32,13 +26,7 @@ jobs:
         asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
       env:
         TEST: |-
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subdir.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/index.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/subsubdir.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/vamoose.adoc
-          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir2/subdir2.adoc
+          asciidoctor -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
     - name: Test Asciidoctor PDF run
       uses: ./
       with:
@@ -46,13 +34,7 @@ jobs:
         format: 'pdf'
       env:
         TEST: |-
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/index.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/index.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subdir.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subsubdir/index.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subsubdir/subsubdir.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir/subsubdir/vamoose.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json  test/subdir2/subdir2.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
     - name: Test Asciidoctor PDF run with args
       uses: ./
       with:
@@ -61,10 +43,4 @@ jobs:
         asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
       env:
         TEST: |-
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subdir.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/index.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/subsubdir.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/vamoose.adoc
-          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir2/subdir2.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
