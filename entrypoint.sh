@@ -39,11 +39,15 @@ fi
 COMMAND=$(echo "$ASCIIDOCTOR -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
 OUTPUT=
 
+echo "Running '$COMMAND'"
+
 # TEST env variable indicates we should be in testing mode (below).
 mkdir /tmp/asciidoc-out
 eval $COMMAND
 
-OUTPUT=$(echo "::set-output name=compiled-asciidoc::$(echo /tmp/asciidoc-out/**/*)")
+FILES=$(echo /tmp/asciidoc-out/**/*)
+OUTPUT="::set-output name=asciidoctor-artifacts::$FILES"
+echo "Generated files $FILES"
 
 if [[ -z $TEST_COMMAND && -z $TEST_OUTPUT ]]; then
   echo $OUTPUT

@@ -18,6 +18,9 @@ inputs:
     description: Additional arguments to pass the asciidoctor command.
     required: false
     default: ''
+outputs:
+  compiled-asciidoc:
+    description: The list of space-separated compilation outputs
 runs:
   using: docker
   image: Dockerfile
