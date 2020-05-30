@@ -1,8 +1,9 @@
 #!/bin/bash
 # Exit on error.
-set -ex
+set -e
+# Allow ** globs, ignore empty globs
+shopt -s extglob globstar nullglob
 
-echo $0 $1 $2 $3
 EX_USAGE=64 # Usage error exit code from /usr/include/sysexits.h
 
 OUTPUT_FORMAT=
@@ -35,7 +36,6 @@ if [[ "pdf" = $OUTPUT_FORMAT ]]; then
   ASCIIDOCTOR=asciidoctor-pdf
 fi
 
-printf "$*\n" >&2
 if [[ -z $INPUT_FILES ]]; then
   printf "No input files specified\n" >&2
   exit $EX_USAGE
@@ -48,18 +48,19 @@ if [[ -z $TEST ]]; then
     $ASCIIDOCTOR -r asciidoctor-diagram $ASCIIDOCTOR_ARGS $INPUT_FILES
   done
 else
-  echo "" > test
+  printf "" > entrypoint-test-output
   for file in $(ls $INPUT_FILES); do
     set +x
-    echo "$ASCIIDOCTOR -r asciidoctor-diagram $ASCIIDOCTOR_ARGS $file" >> test
+    echo "$ASCIIDOCTOR -r asciidoctor-diagram $ASCIIDOCTOR_ARGS $file" >> entrypoint-test-output
   done
 
-  commands=$(cat test)
-  if [[ $commands = $TEST ]]; then 
+  commands=$(cat entrypoint-test-output)
+  if [[ $commands = "${TEST}" ]]; then
     echo "Commands equal test expectations."
     exit 0
   else                                                                             
-    printf "Ran unexpected commands:\n$commands\nvs\n$TEST\n" >&2
+    printf "Ran unexpected commands:\n" >&2
+    diff entrypoint-test-output <(echo "${TEST}") >&2
     exit 1
   fi
 
