@@ -16,8 +16,6 @@ jobs:
       uses: ./
       with:
         files: 'test/*.adoc test/**/*.adoc'
-        #args: 
-        #format: 'pdf'
       env:
         TEST: |-
           asciidoctor -r asciidoctor-diagram  test/index.adoc
@@ -27,3 +25,46 @@ jobs:
           asciidoctor -r asciidoctor-diagram  test/subdir/subsubdir/subsubdir.adoc
           asciidoctor -r asciidoctor-diagram  test/subdir/subsubdir/vamoose.adoc
           asciidoctor -r asciidoctor-diagram  test/subdir2/subdir2.adoc
+    - name: Test Asciidoctor run with args
+      uses: ./
+      with:
+        files: 'test/*.adoc test/**/*.adoc'
+        asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
+      env:
+        TEST: |-
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subdir.adoc
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/index.adoc
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/subsubdir.adoc
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/vamoose.adoc
+          asciidoctor -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir2/subdir2.adoc
+    - name: Test Asciidoctor PDF run
+      uses: ./
+      with:
+        files: 'test/*.adoc test/**/*.adoc'
+        format: 'pdf'
+      env:
+        TEST: |-
+          asciidoctor-pdf -r asciidoctor-diagram  test/index.adoc
+          asciidoctor-pdf -r asciidoctor-diagram  test/index.adoc
+          asciidoctor-pdf -r asciidoctor-diagram  test/subdir/subdir.adoc
+          asciidoctor-pdf -r asciidoctor-diagram  test/subdir/subsubdir/index.adoc
+          asciidoctor-pdf -r asciidoctor-diagram  test/subdir/subsubdir/subsubdir.adoc
+          asciidoctor-pdf -r asciidoctor-diagram  test/subdir/subsubdir/vamoose.adoc
+          asciidoctor-pdf -r asciidoctor-diagram  test/subdir2/subdir2.adoc
+    - name: Test Asciidoctor PDF run with args
+      uses: ./
+      with:
+        files: 'test/*.adoc test/**/*.adoc'
+        format: pdf
+        asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
+      env:
+        TEST: |-
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subdir.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/index.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/subsubdir.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir/subsubdir/vamoose.adoc
+          asciidoctor-pdf -r asciidoctor-diagram -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/subdir2/subdir2.adoc
