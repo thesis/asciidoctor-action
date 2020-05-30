@@ -28,16 +28,13 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 # --silent because otherwise we get warnings about the tiny package.json we're
 # using. We don't really have a named package here, we just want to specify
 # some dependencies.
-RUN npm install @mermaid-js/mermaid-cli
+RUN npm install --silent @mermaid-js/mermaid-cli
 
 # Add user so we don't need --no-sandbox.
 RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
     && chown -R pptruser:pptruser /mermaid
 
 RUN /bin/bash -c "echo '{\"args\":[\"--no-sandbox\"]}' > /mermaid/puppeteer-config.json"
-
-# Run everything after as non-privileged user.
-USER pptruser
 
 ENV PATH /mermaid/node_modules/.bin:/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

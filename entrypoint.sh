@@ -36,17 +36,17 @@ if [[ -z $INPUT_FILES ]]; then
   exit $EX_USAGE
 fi
 
-COMMAND=$(echo "$ASCIIDOCTOR -R . -D /tmp/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
+COMMAND=$(echo "$ASCIIDOCTOR -R . -D $GITHUB_WORKSPACE/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
 OUTPUT=
 
 echo "Running '$COMMAND'"
 
 # TEST env variable indicates we should be in testing mode (below).
-mkdir /tmp/asciidoc-out
+mkdir $GITHUB_WORKSPACE/asciidoc-out
 eval $COMMAND
 
-FILES=$(echo /tmp/asciidoc-out/**/*)
-OUTPUT="::set-output name=asciidoctor-artifacts::$FILES"
+FILES=$(echo $GITHUB_WORKSPACE/asciidoc-out/**/*)
+OUTPUT="::set-output name=asciidoctor-artifacts::'$FILES'"
 echo "Generated files $FILES"
 
 if [[ -z $TEST_COMMAND && -z $TEST_OUTPUT ]]; then
