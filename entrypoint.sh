@@ -36,7 +36,7 @@ if [[ -z $INPUT_FILES ]]; then
   exit $EX_USAGE
 fi
 
-COMMAND=$(echo "$ASCIIDOCTOR -R . -D $GITHUB_WORKSPACE/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json" $ASCIIDOCTOR_ARGS $INPUT_FILES)
+COMMAND=$(echo "$ASCIIDOCTOR -R . -D $GITHUB_WORKSPACE/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a source-highlighter@=rouge" $ASCIIDOCTOR_ARGS $INPUT_FILES)
 OUTPUT=
 
 echo "Running '$COMMAND'"
