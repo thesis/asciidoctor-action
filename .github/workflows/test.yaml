@@ -18,7 +18,7 @@ jobs:
         files: 'test/*.adoc test/**/*.adoc'
       env:
         TEST_COMMAND: |-
-          asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a source-highlighter@=rouge test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
   test-html-args:
@@ -34,7 +34,7 @@ jobs:
       env:
         DATE: '+%Y-%m-%d'
         TEST_COMMAND: |-
-          asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a source-highlighter@=rouge -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
   test-pdf:
@@ -49,7 +49,7 @@ jobs:
         format: 'pdf'
       env:
         TEST_COMMAND: |-
-          asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a source-highlighter@=rouge test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
   test-pdf-args:
@@ -65,6 +65,6 @@ jobs:
         asciidoctor-args: '-a revdate=`date +%Y-%m-%d` --failure-level=ERROR'
       env:
         TEST_COMMAND: |-
-          asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
+          asciidoctor-pdf -R . -D /github/workspace/asciidoc-out -r asciidoctor-diagram -a mermaid-puppeteer-config=/mermaid/puppeteer-config.json -a source-highlighter@=rouge -a revdate=`date +%Y-%m-%d` --failure-level=ERROR test/index.adoc test/index.adoc test/subdir/subdir.adoc test/subdir/subsubdir/index.adoc test/subdir/subsubdir/subsubdir.adoc test/subdir/subsubdir/vamoose.adoc test/subdir2/subdir2.adoc
         TEST_OUTPUT: |-
           ::set-output name=asciidoctor-artifacts::asciidoc-out
