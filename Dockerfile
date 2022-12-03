@@ -12,6 +12,8 @@ RUN apk add --no-cache \
       ttf-freefont \
       nodejs \
       npm \
+      openjdk11 \
+      graphviz \
       bash
 
 RUN mkdir /mermaid
