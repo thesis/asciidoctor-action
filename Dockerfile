@@ -1,8 +1,6 @@
-FROM ruby:2-alpine
+FROM asciidoctor/docker-asciidoctor:1.60@sha256:0c8df5a7688303b70fb8db3bec25c19503d7232d38b61cfaef0c943e1722c018
 
-RUN gem install asciidoctor asciidoctor-pdf asciidoctor-diagram rouge
-
-RUN apk add --no-cache \
+RUN apk add \
       chromium \
       nss \
       freetype \
@@ -12,6 +10,8 @@ RUN apk add --no-cache \
       ttf-freefont \
       nodejs \
       npm \
+      openjdk11 \
+      graphviz \
       bash
 
 RUN mkdir /mermaid
